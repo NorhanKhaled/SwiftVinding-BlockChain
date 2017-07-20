@@ -140,7 +140,7 @@ func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, ar
 	var code = userId + assetId
 	var trans = Transaction{ID: code, Email:userId, CashBalance: 10000000.0, AssetsIds: assetIds}
         accountBytes, err := json.Marshal(&trans)
-        err = stub.PutState(userId, []byte(assetId)) //write the variable into the chaincode state
+        err = stub.PutState(userId, accountBytes) //write the variable into the chaincode state
 	if err != nil {
 		return nil, err
 	}
