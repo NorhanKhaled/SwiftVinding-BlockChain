@@ -116,29 +116,24 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 }
 
 // CreateTransaction to add asset to certain userID
-func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) 
-    {
-		var userID, assetID string
-		var err error
-	    fmt.Println("Entering Transaction")
+func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	var key, value string
+	var err error
+	fmt.Println("running write()")
 
-		if len(args) != 2
-			{
-				return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
-			}
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	}
 
-		userID = args[0] 
-		assetID = args[1]
-		err = stub.PutState(userID, []byte(assetID)) //write the variable into the chaincode state
-		if err != nil 
-			{
-			        fmt.Println("Could not save Transaction to ledger", err)
-				return nil, err
-			}
-				   fmt.Println("Successfully saved the Transaction")
+	key = args[0] //rename for funsies
+	value = args[1]
+	err = stub.PutState(key, []byte(value)) //write the variable into the chaincode state
+	if err != nil {
+		return nil, err
+	}
+	return nil, nil
+}
 
-		return nil, nil
-    }
 
 // read - query function to read key/value pair
 func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
