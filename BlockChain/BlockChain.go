@@ -43,6 +43,8 @@ type Account struct {
 	Name           string  `json:"name"`
 	CashBalance    float64 `json:"cashBalance"`
 	Password       string  `json:"password"`
+	AssetsIds   []string `json:"assetIds"`
+
 }
 
 type Transaction struct {
@@ -126,9 +128,14 @@ func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, ar
 		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
 	}
 
-	userId = args[0] //rename for funsies
+	userId = args[0] 
 	assetId = args[1]
-	err = stub.PutState(userId, []byte(assetId)) //write the variable into the chaincode state
+	var assetIds []string
+        var transaction []string
+	var code = userId + assetId
+	var trans = Transaction{ID: code, Email:userId, CashBalance: 10000000.0, AssetsIds: assetIds}
+        accountBytes, err := json.Marshal(&trans)
+        err = stub.PutState(userId, []byte(assetId)) //write the variable into the chaincode state
 	if err != nil {
 		return nil, err
 	}
