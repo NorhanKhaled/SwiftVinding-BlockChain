@@ -138,8 +138,13 @@ func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, ar
 	var assetIds []string
         var transaction []string
 	var code = userId + assetId
-	var trans = Transaction{ID: code, Email:userId, CashBalance: 10000000.0, AssetsIds: assetIds}
+	var trans = Transaction{Code: code, Email:userId, CashBalance: 10000000.0, AssetsIds: assetIds}
         accountBytes, err := json.Marshal(&trans)
+	if err != nil {
+		fmt.Println("error creating transaction" + Transaction.Code)
+		return nil, errors.New("Error creating transaction " + Transaction.Code)
+	}
+
         err = stub.PutState(userId, accountBytes) //write the variable into the chaincode state
 	if err != nil {
 		return nil, err
