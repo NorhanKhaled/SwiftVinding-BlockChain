@@ -134,11 +134,11 @@ func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, ar
 	}
 
 	userId = args[0] 
-	assetId = args[1]
+	assetId= args[1]
 	var assetIds []string
         var transaction []string
 	 
-	var trans = Transaction{Code: 5+, Email:userId}
+	var trans = Transaction{Code: 5, Email:userId}
         accountBytes, err := json.Marshal(&trans)
 	if err != nil {
 		fmt.Println("error creating transaction" + Transaction.Code)
