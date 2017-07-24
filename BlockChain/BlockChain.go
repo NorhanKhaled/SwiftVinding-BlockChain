@@ -157,7 +157,6 @@ func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, ar
 func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var key, jsonResp string
 	var err error
-	var trans []string
 
 	if len(args) != 1 {
 		return nil, errors.New("Incorrect number of arguments. Expecting name of the key to query")
@@ -169,20 +168,6 @@ func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) 
 		jsonResp = "{\"Error\":\"Failed to get state for " + key + "\"}"
 		return nil, errors.New(jsonResp)
 	}
-		var keys []string
-          for _, value := range keys {
-		valAsbytes, err := stub.GetState(value)
-		  var tr Transaction
-		  err = json.Unmarshal(valAsbytes, &tr)
-		  if err != nil {
-			fmt.Println("Error retrieving tr " + value)
-			return nil, errors.New("Error retrieving tr " + value)
-		}
 
-		fmt.Println("Appending tr" + value)
-		trans = append(trans, tr)
-	}
-
-
-	return trans, nil
+	return valAsbytes, nil
 }
