@@ -53,7 +53,7 @@ type Account struct {
 }
 
 type Transaction struct {
-	Code            int     `json:"code"`
+	Code            string    `json:"code"`
 	Email          string   `json:"email"`
 	Date  		   string   `json:"date"`
 	Time   		   int      `json:"time"`
@@ -137,7 +137,7 @@ func (t *SimpleChaincode) CreateTransaction(stub shim.ChaincodeStubInterface, ar
 	assetId = args[1]
 	var assetIds []string
         var transaction []string
-	var code = userId + assetId
+	string code = append(userId , assetId)
 	var trans = Transaction{Code: code, Email:userId}
         accountBytes, err := json.Marshal(&trans)
 	if err != nil {
